@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div>r</div>
+</body>
+<script>
+    axios.interceptors.request.use(
+        (config) => {
+            // 요청 전 localStorage에서 'authorization' 값을 가져와 헤더에 설정
+            const authorization = window.localStorage.getItem('authorization');
+            if (authorization) {
+                config.headers['Authorization'] = authorization;
+            }
+            return config;
+        },
+        (error) => {
+            return Promise.reject(error);
+        }
+    );
+
+  axios.interceptors.response.use(
+          (response) => {
+            return response;
+          },
+          (error) => {
+            if (error.response && error.response.status === 401) {
+                window.localStorage.removeItem('authorization');
+               window.location = '/login';
+
+            }
+            // Handle other errors here
+            // return Promise.reject(error);
+          }
+  );
+
+</script>
+</html>
