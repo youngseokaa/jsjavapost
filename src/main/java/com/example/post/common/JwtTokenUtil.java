@@ -8,6 +8,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.net.URLEncoder;
@@ -34,7 +38,7 @@ public class JwtTokenUtil {
     private String secretKey;
     public static final String ACCESS_TOKEN = "Authorization";
     public static final String BEARER_PREFIX = "Bearer ";
-
+    private final MemberDetailServiceImpl memberDetailService;
 
 
 
@@ -43,7 +47,7 @@ public class JwtTokenUtil {
         // Claim에 loginId를 넣어 줌으로써 나중에 loginId를 꺼낼 수 있음
         Claims claims = Jwts.claims();
         claims.put("loginId", loginId);
-        long expireTimeMs = 10000;
+        long expireTimeMs = 1000 * 60 * 60 * 24;;
 
 
         String accessToken = BEARER_PREFIX +
@@ -74,6 +78,11 @@ public class JwtTokenUtil {
     // SecretKey를 사용해 Token Parsing
     private static Claims extractClaims(String token, String secretKey) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+    }
+
+    public Authentication createAuthentication(String email) {
+        UserDetails memberDetails = memberDetailService.loadUserByUsername(email);
+        return new UsernamePasswordAuthenticationToken(memberDetails, null, memberDetails.getAuthorities());
     }
 }
 

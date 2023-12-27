@@ -13,23 +13,25 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-
+@Component
 @RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {
 
-        private final MemberService memberService;
 
+        private final JwtTokenUtil jwtTokenUtil;
         @Value("${jwt.secret}")
-        private final String secretKey;
+        private String secretKey;
 
     @Override
         protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -77,16 +79,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             // Jwt Token에서 loginId 추출
             String loginId = JwtTokenUtil.getLoginId(token, secretKey);
 
-            // 추출한 loginId로 User 찾아오기
-            Member loginUser = memberService.getLoginUserByLoginId(loginId);
-
-            // loginUser 정보로 UsernamePasswordAuthenticationToken 발급
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                    loginUser.getLoginid(), null, List.of(new SimpleGrantedAuthority(loginUser.getGender())));
-            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-            // 권한 부여
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            setAuthentication(loginId);
             filterChain.doFilter(request, response);
         }
+
+    public void setAuthentication(String loginid) {
+        Authentication authentication = jwtTokenUtil.createAuthentication(loginid);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
 }

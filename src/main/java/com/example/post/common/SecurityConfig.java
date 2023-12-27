@@ -20,10 +20,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final MemberService memberService;
+    private final JwtTokenFilter jwtTokenFilter;
 
-    @Value("${jwt.secret}")
-    private  String secretKey ;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -31,10 +29,10 @@ public class SecurityConfig {
                 .csrf().disable()
                 .headers(headers -> headers.frameOptions().sameOrigin())	// H2 콘솔 사용을 위한 설정
                 .authorizeHttpRequests(authorize ->
-                        authorize.requestMatchers("/SignUp").authenticated()	// requestMatchers의 인자로 전달된 url은 모두에게 허용
+                        authorize.requestMatchers("/SignUp/aa").authenticated()	// requestMatchers의 인자로 전달된 url은 모두에게 허용
                                 .anyRequest().permitAll()	// 그 외의 모든 요청은 인증 필요
                                 .and()
-                                .addFilterBefore(new JwtTokenFilter(memberService,secretKey), UsernamePasswordAuthenticationFilter.class)
+                                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
 
                 )
                 .sessionManagement(sessionManagement ->
