@@ -4,12 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <script src="//code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/tokenCheck.js}"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
     />
     <link href="/Css/Header.css" rel="stylesheet">
+
     <title>Title</title>
+
 </head>
 <style>
   html {
@@ -101,10 +105,6 @@
     <script>
 
 
-
-
-
-
         $("#btnJoin").click(function() {
             var loginid = $("#loginid").val();
             var pwsd1 = $("#pwsd1").val();
@@ -119,9 +119,7 @@
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(formData),
-                success: function(data,textStatus,request) {
-                    window.localStorage.setItem('authorization' , request.getResponseHeader('authorization'));
-                    alert(data.message);
+                success: function() {
                     window.location.href = "/";
                 },
                 error: function(error) {

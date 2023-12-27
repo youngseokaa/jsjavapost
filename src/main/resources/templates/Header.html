@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <link href="/Css/Header.css" rel="stylesheet">
 <script src="//code.jquery.com/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" th:src="@{/js/tokenCheck.js}"></script>
 <style>
 
     nav {
@@ -42,33 +43,16 @@
   <nav th:fragment="headerFragment"  class="navbar navbar-expand-sm bg-light navbar-light">
       <!--    내비바start-->
       <ul class="nav-left">
-        <li><a class=nav-a href="/">홈</a></li>
-        <li><a class=nav-a href="/PostCommunity">게시판</a></li>
+        <li><a class=nav-a onclick=urlCheck("/")>홈</a></li>
+        <li><a class=nav-a onclick=urlCheck("/PostCommunity")>게시판</a></li>
         <li><a class=nav-a href="#">포트폴리오</a></li>
         <li><a class=nav-a href="#">연락하기</a></li>
       </ul>
 
       <ul class="nav-right">
-        <li><a class=nav-a href="/Login">로그인</a></li>
-        <li><a class=nav-a href="/SignUp" >로그아웃</a></li>
+        <li><a class=nav-a onclick=urlCheck("/Login")>로그인</a></li>
+        <li><a class=nav-a onclick=urlCheck("/SignUp")>로그아웃</a></li>
       </ul>
   </nav>
 </body>
-<script>
-    fetch("http://localhost:8080/SignUp", {
-        method: "get",
-        headers: {
-            contentType: 'application/json',
-            Authorization: localStorage.getItem("authorization"),
-        }
-    })
-        .then(response => {
-            console.log(response);
-            // window.location.href = "/SignUp";
-        })
-        .catch(error => {
-            window.location.href = "/Login";
-        });
-
-</script>
 </html>

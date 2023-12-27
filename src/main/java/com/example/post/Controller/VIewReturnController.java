@@ -1,5 +1,6 @@
 package com.example.post.Controller;
 
+import com.example.post.common.JwtTokenUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -18,6 +19,7 @@ public class VIewReturnController {
 
     @GetMapping("/Login")
     public String LoginView() {
+
         return "Login"; // HTML 파일명 (확장자 없이)
     }
 
@@ -25,5 +27,6 @@ public class VIewReturnController {
     public String PostCommunityView() {
         return "PostCommunity"; // HTML 파일명 (확장자 없이)
     }
+
 
 }

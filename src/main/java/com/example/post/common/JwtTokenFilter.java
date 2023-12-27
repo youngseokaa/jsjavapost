@@ -1,5 +1,6 @@
 package com.example.post.common;
 
+import com.example.post.Controller.VIewReturnController;
 import com.example.post.Service.MemberService;
 import com.example.post.entity.Member;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -18,6 +19,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -30,9 +33,21 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Override
         protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String authorizationHeader = null;
+        String checkCookie = request.getHeader("cookie");
+        int start = -1;
 
-            if(authorizationHeader == null) {
+        if(checkCookie != null){
+        start = checkCookie.indexOf("Authorization=");
+        }
+
+        if (start != -1) {
+            int end = checkCookie.indexOf(";", start);
+            authorizationHeader = end != -1 ? checkCookie.substring(start + "Authorization=".length(), end) : checkCookie.substring(start + "Authorization=".length());
+            authorizationHeader = URLDecoder.decode(authorizationHeader, StandardCharsets.UTF_8);
+        }
+
+        if(authorizationHeader == null) {
                 filterChain.doFilter(request, response);
                 return;
             }
@@ -53,9 +68,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                     return;
                 }
             }catch(ExpiredJwtException expiredJwtException){
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("토큰이 만료되었습니다.");
-                response.getWriter().flush();
+                Cookie cookie = new Cookie("Authorization", null);
+                response.addCookie(cookie);
+                filterChain.doFilter(request, response);
+                return;
             }
 
             // Jwt Token에서 loginId 추출

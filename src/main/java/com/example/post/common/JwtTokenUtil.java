@@ -5,6 +5,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -32,7 +35,7 @@ public class JwtTokenUtil {
     public static final String ACCESS_TOKEN = "Authorization";
     public static final String BEARER_PREFIX = "Bearer ";
 
-    protected final Log logger = LogFactory.getLog(getClass());
+
 
 
     public void createToken(String loginId, HttpServletResponse response) {
@@ -40,7 +43,7 @@ public class JwtTokenUtil {
         // Claim에 loginId를 넣어 줌으로써 나중에 loginId를 꺼낼 수 있음
         Claims claims = Jwts.claims();
         claims.put("loginId", loginId);
-        long expireTimeMs = 10;
+        long expireTimeMs = 10000;
 
 
         String accessToken = BEARER_PREFIX +
@@ -51,7 +54,9 @@ public class JwtTokenUtil {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
 
-        response.addHeader(ACCESS_TOKEN, accessToken);
+        String utfAccessToken = URLEncoder.encode(accessToken, StandardCharsets.UTF_8);
+        Cookie cookie = new Cookie(ACCESS_TOKEN, utfAccessToken);
+        response.addCookie(cookie);
     }
 
     // Claims에서 loginId 꺼내기
