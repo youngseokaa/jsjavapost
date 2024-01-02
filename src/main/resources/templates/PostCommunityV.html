@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="//code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/tokenCheck.js}"></script>
     <link href="/Css/Header.css" rel="stylesheet">
     <style>
         table {
@@ -24,38 +25,7 @@
             text-align: center;
         }
 
-        #board-search .search-window {
-            padding: 15px 0;
-            background-color: #f9f7f9;
-        }
-        #board-search .search-window .search-wrap {
-            position: relative;
-            /*   padding-right: 124px; */
-            margin: 0 auto;
-            width: 80%;
-            max-width: 564px;
-        }
-        #board-search .search-window .search-wrap input {
-            height: 40px;
-            width: 100%;
-            font-size: 14px;
-            padding: 7px 14px;
-            border: 1px solid #ccc;
-        }
-        #board-search .search-window .search-wrap input:focus {
-            border-color: #333;
-            outline: 0;
-            border-width: 1px;
-        }
-        #board-search .search-window .search-wrap .btn {
-            position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            width: 108px;
-            padding: 0;
-            font-size: 16px;
-        }
+
 
         .board-table {
             font-size: 13px;
@@ -107,55 +77,8 @@
             display: none;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 0 30px;
-            font-size: 15px;
-            font-weight: 400;
-            background: transparent;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: middle;
-            -ms-touch-action: manipulation;
-            touch-action: manipulation;
-            cursor: pointer;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            border: 1px solid transparent;
-            text-transform: uppercase;
-            -webkit-border-radius: 0;
-            -moz-border-radius: 0;
-            border-radius: 0;
-            -webkit-transition: all 0.3s;
-            -moz-transition: all 0.3s;
-            -ms-transition: all 0.3s;
-            -o-transition: all 0.3s;
-            transition: all 0.3s;
-        }
 
-        .btn-dark {
-            background: #555;
-            color: #fff;
-        }
 
-        .btn-dark:hover, .btn-dark:focus {
-            background: #373737;
-            border-color: #373737;
-            color: #fff;
-        }
-
-        .btn-dark {
-            background: #555;
-            color: #fff;
-        }
-
-        .btn-dark:hover, .btn-dark:focus {
-            background: #373737;
-            border-color: #373737;
-            color: #fff;
-        }
 
         /* reset */
 
@@ -175,14 +98,57 @@
             width: 100%;
             margin: 0 auto;
         }
-        .blind {
-            position: absolute;
-            overflow: hidden;
-            clip: rect(0 0 0 0);
-            margin: -1px;
-            width: 1px;
-            height: 1px;
+        /* 수정된 스타일 */
+        .flex-container {
+            display: flex;
+            justify-content: space-between; /* 내부 요소 간격을 최대화하여 양쪽으로 분산 정렬 */
+            align-items: center; /* 세로 중앙 정렬 */
         }
+
+        .search-window {
+            text-align: center; /* 내부 요소 가운데 정렬 */
+            width: 100%; /* 중앙 정렬을 위해 너비 100% 설정 */
+        }
+
+        .search-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* 검색창과 버튼을 오른쪽으로 정렬 */
+            flex: 1; /* Flexbox 사용하여 검색창과 버튼을 오른쪽으로 이동 */
+            margin-right: 600px; /* 추가적인 오른쪽 여백 조정 */
+        }
+
+        #search {
+            height: 40px;
+            width: 300px; /* 검색창 길이 조절 */
+            font-size: 14px;
+            padding: 7px 14px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            margin-right: 5px; /* 검색창과 버튼 사이 여백 */
+        }
+
+        .btn-dark {
+            /* 버튼 스타일 */
+            padding: 10px 20px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .btn-write {
+            /* 글쓰기 버튼 스타일 */
+            padding: 10px 20px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+
+
+
+
 
     </style>
 </head>
@@ -199,12 +165,13 @@
       <div id="board-search">
           <div class="container">
               <div class="search-window">
-                  <form action="">
+                  <form action="" class="flex-container">
                       <div class="search-wrap">
-                          <label for="search" class="blind">공지사항 내용 검색</label>
+                          <label for="search" class="blind"></label>
                           <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." value="">
                           <button type="submit" class="btn btn-dark">검색</button>
                       </div>
+                      <button class="btn btn-write">글쓰기</button>
                   </form>
               </div>
           </div>

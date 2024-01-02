@@ -52,6 +52,7 @@
       <ul class="nav-right">
         <li><a class=nav-a onclick=urlCheck("/Login")>로그인</a></li>
         <li><a class=nav-a onclick=urlCheck("/SignUp")>로그아웃</a></li>
+        <li><a class=nav-a onclick=urlCheck("/SignUp") th:if="${info == 'a'}">로그아웃</a></li>
       </ul>
   </nav>
 </body>
