@@ -22,6 +22,4 @@ public class TimeStamped {
     @Column
     private LocalDateTime modifiedAt;
 
-    @Column
-    private boolean softDelete;
 }

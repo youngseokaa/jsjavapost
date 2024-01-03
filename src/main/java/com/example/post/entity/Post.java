@@ -15,7 +15,7 @@ public class Post extends TimeStamped{
     private Long id;
     private String content;
     private String title;
-
+    private boolean softDelete;
 
     @ManyToOne
     @JoinColumn(name = "memberId", nullable = false)
@@ -23,7 +23,6 @@ public class Post extends TimeStamped{
 
     @Builder
     public Post(String content, String title, Member member) {
-
         this.content = content;
         this.title = title;
         this.member = member;
