@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/tokenCheck.js}"></script>
+    <link href="/Css/Header.css" rel="stylesheet">
+
+    <style>
+        section.notice {
+            padding: 80px 0;
+            width: 900px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .page-title {
+            margin-bottom: 60px;
+        }
+        .page-title h3 {
+            font-size: 28px;
+            color: #333333;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .Post {
+            text-align: center; /* 내용 가운데 정렬 */
+
+        }
+
+        /*.input-group {*/
+        /*    margin-bottom: 10px; !* 입력 그룹 간격 조정 *!*/
+        /*}*/
+
+        label {
+            margin-right: 10px;
+        }
+
+        #title {
+
+            height: 30px; /* 높이 조절 */
+            padding: 5px; /* 내부 여백 추가 */
+            margin: 5px;
+            border: 1px solid #ccc; /* 테두리 추가 */
+            border-radius: 4px; /* 테두리 모서리 둥글게 */
+            box-sizing: border-box; /* 너비와 높이 계산에 테두리와 안쪽 여백을 포함 */
+        }
+        #content {
+
+            height: 400px; /* 높이 조절 */
+            padding: 5px; /* 내부 여백 추가 */
+            margin: 5px;
+            border: 1px solid #ccc; /* 테두리 추가 */
+            border-radius: 4px; /* 테두리 모서리 둥글게 */
+            box-sizing: border-box; /* 너비와 높이 계산에 테두리와 안쪽 여백을 포함 */
+        }
+
+        .textCenter{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <div th:replace="~{Header :: headerFragment}"></div>
+    <section class="notice">
+        <div class="page-title">
+            <div class="container">
+                <h3>게시판</h3>
+            </div>
+        </div>
+        <div id="advertise"></div>
+        <div class="Post">
+            <div class="textCenter">
+                <div><label for="title">제목</label></div>
+                <div ><input style="width: 800px" type="text" id="title" name="title"></div>
+            </div>
+            <div class="textCenter">
+                <div><label for="content">내용</label></div>
+                <div><textarea style="width: 800px" id="content" name="content" ></textarea></div>
+            </div>
+            <div><button id="submitBtn">게시글 등록</button></div>
+        </div>
+
+    </section>
+</body>
+<script>
+
+    $(document).ready(function() {
+
+
+
+        $('#submitBtn').on('click', function() {
+            var title = $('#title').val(); // CKEditor에서 데이터 가져오기
+            var content = $('#content').val(); // 일반 input에서 값 가져오기
+
+            var formData = {
+                title: title,
+                content: content
+            };
+
+            $.ajax({
+                url: '/api/post',  // 실제 서버 엔드포인트로 변경
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function() {
+                    alert("게시글 등록이 완료되었습니다.");
+                    window.location.href = "/PostCommunityV";
+                },
+                error: function(error) {
+                    alert(error.responseJSON.message);
+                    window.location.href = "/Login";
+                }
+            });
+        });
+    });
+</script>
+</html>

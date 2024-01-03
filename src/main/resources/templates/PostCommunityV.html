@@ -5,6 +5,7 @@
     <title>Title</title>
     <script src="//code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" th:src="@{/js/tokenCheck.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.js"></script>
     <link href="/Css/Header.css" rel="stylesheet">
     <style>
         table {
@@ -36,7 +37,6 @@
 
         .board-table a {
             color: #333;
-            display: inline-block;
             line-height: 1.4;
             word-break: break-all;
             vertical-align: middle;
@@ -106,7 +106,7 @@
         }
 
         .search-window {
-            text-align: center; /* 내부 요소 가운데 정렬 */
+            text-align: right; /* 내부 요소 가운데 정렬 */
             width: 100%; /* 중앙 정렬을 위해 너비 100% 설정 */
         }
 
@@ -115,7 +115,7 @@
             align-items: center;
             justify-content: flex-end; /* 검색창과 버튼을 오른쪽으로 정렬 */
             flex: 1; /* Flexbox 사용하여 검색창과 버튼을 오른쪽으로 이동 */
-            margin-right: 600px; /* 추가적인 오른쪽 여백 조정 */
+            margin-bottom: 10px;
         }
 
         #search {
@@ -139,6 +139,7 @@
 
         .btn-write {
             /* 글쓰기 버튼 스타일 */
+            margin-left: auto;
             padding: 10px 20px;
             background-color: #000;
             color: #fff;
@@ -146,10 +147,13 @@
             border-radius: 5px;
         }
 
+        .Tbody-calumn{
+            position: relative;
+        }
 
-
-
-
+        .PostCommunityR{
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -171,7 +175,7 @@
                           <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." value="">
                           <button type="submit" class="btn btn-dark">검색</button>
                       </div>
-                      <button class="btn btn-write">글쓰기</button>
+
                   </form>
               </div>
           </div>
@@ -186,33 +190,90 @@
                       <th scope="col" class="th-num">번호</th>
                       <th scope="col" class="th-title">제목</th>
                       <th scope="col" class="th-date">등록일</th>
+                      <th scope="col" class="th-date">수정일</th>
                   </tr>
                   </thead>
-                  <tbody>
-                  <tr>
-                      <td>3</td>
-                      <th>
-                          <a href="#!">[공지사항] 개인정보 처리방침 변경안내처리방침</a>
-                          <p>테스트</p>
-                      </th>
-                      <td>2017.07.13</td>
-                  </tr>
-
-                  <tr>
-                      <td>2</td>
-                      <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
-                      <td>2017.06.15</td>
-                  </tr>
-
-                  <tr>
-                      <td>1</td>
-                      <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
-                      <td>2017.06.15</td>
-                  </tr>
+                  <tbody class="Tbody-table">
+                      <tr class="Tbody-calumn">
+                          <td>2</td>
+                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
+                          <td>2017.06.15</td>
+                          <td>2017.06.15</td>
+                      </tr>
+                      <tr class="Tbody-calumn">
+                          <td>2</td>
+                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
+                          <td>2017.06.15</td>
+                          <td>2017.06.15</td>
+                      </tr>
+                      <tr class="Tbody-calumn">
+                          <td>2</td>
+                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
+                          <td>2017.06.15</td>
+                          <td>2017.06.15</td>
+                      </tr>
+                      <tr class="Tbody-calumn">
+                          <td>2</td>
+                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
+                          <td>2017.06.15</td>
+                          <td>2017.06.15</td>
+                      </tr>
+                      <tr class="Tbody-calumn">
+                          <td>2</td>
+                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
+                          <td>2017.06.15</td>
+                          <td>2017.06.15</td>
+                      </tr>
+                      <tr class="Tbody-calumn">
+                          <td>2</td>
+                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
+                          <td>2017.06.15</td>
+                          <td>2017.06.15</td>
+                      </tr>
+                      <tr class="Tbody-calumn">
+                          <td>2</td>
+                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
+                          <td>2017.06.15</td>
+                          <td>2017.06.15</td>
+                      </tr>
+                      <tr class="Tbody-calumn">
+                          <td>2</td>
+                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
+                          <td>2017.06.15</td>
+                          <td>2017.06.15</td>
+                      </tr>
+                      <tr class="Tbody-calumn">
+                          <td>2</td>
+                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
+                          <td>2017.06.15</td>
+                          <td>2017.06.15</td>
+                      </tr>
+                      <tr class="Tbody-calumn">
+                          <td>2</td>
+                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
+                          <td>2017.06.15</td>
+                          <td>2017.06.15</td>
+                      </tr>
+                      <tr class="Tbody-calumn">
+                          <td>2</td>
+                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
+                          <td>2017.06.15</td>
+                          <td>2017.06.15</td>
+                      </tr>
+                      <tr class="Tbody-calumn">
+                          <td>2</td>
+                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
+                          <td>2017.06.15</td>
+                          <td>2017.06.15</td>
+                      </tr>
                   </tbody>
               </table>
+              <div id="data-container"></div>
+              <div id="pagination-container"></div>
           </div>
+          <div style="text-align: right"><button class="btn-write">글쓰기</button></div>
       </div>
+
 
   </section>
 </body>

@@ -31,11 +31,19 @@ public class VIewReturnController {
         return "Login"; // HTML 파일명 (확장자 없이)
     }
 
-    @GetMapping("/PostCommunity")
+    @GetMapping("/PostCommunityV")
     public String PostCommunityView(Model model) {
 
         return "PostCommunityV"; // HTML 파일명 (확장자 없이)
     }
 
+    @GetMapping("/PostCommunityW")
+    public String PostCommunityViewR(HttpServletRequest request,Model model) {
+        String checkCookie = request.getHeader("cookie");
+        if(checkCookie.contains("Bearer")){
+            return "PostCommunityW";
+        }
+        return "SignUp"; // HTML 파일명 (확장자 없이)
+    }
 
 }
