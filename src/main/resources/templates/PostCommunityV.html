@@ -5,7 +5,9 @@
     <title>Title</title>
     <script src="//code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" th:src="@{/js/tokenCheck.js}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.js"></script>
+<!--    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
+
     <link href="/Css/Header.css" rel="stylesheet">
     <style>
         table {
@@ -137,15 +139,6 @@
             border-radius: 5px;
         }
 
-        .btn-write {
-            /* 글쓰기 버튼 스타일 */
-            margin-left: auto;
-            padding: 10px 20px;
-            background-color: #000;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-        }
 
         .Tbody-calumn{
             position: relative;
@@ -154,6 +147,76 @@
         .PostCommunityR{
             color: #fff;
         }
+
+        /*여기서부터 페이지네이션*/
+
+
+        /* 페이지네이션 스타일 */
+        .pagination {
+            display: flex;
+            justify-content: center; /* 가운데 정렬 */
+            list-style: none;
+            padding: 0;
+        }
+
+        .pagination > li {
+            display: inline;
+        }
+
+        .pagination > li > a,
+        .pagination > li > span {
+            position: relative;
+            display: inline-block;
+            padding: 6px 12px;
+            margin: 0 2px;
+            line-height: 1.42857143;
+            color: #000; /* 검정색 */
+            text-decoration: none;
+            background-color: #fff;
+            border: 1px solid #000; /* 검정색 */
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s; /* 변경 시 부드럽게 전환 */
+        }
+
+        .pagination > .active > a,
+        .pagination > .active > span {
+            color: #fff;
+            background-color: #000; /* 검정색 */
+            border-color: #000; /* 검정색 */
+            cursor: default;
+        }
+
+        .pagination > li > a:hover,
+        .pagination > li > span:hover {
+            background-color: #000; /* 검정색 */
+            color: #fff;
+        }
+
+        .pagination-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pagination-container {
+            flex: 1; /* 페이지네이션을 가운데로 위치시킴 */
+            text-align: center; /* 텍스트 가운데 정렬 */
+        }
+
+        .btn-write {
+            /* 글쓰기 버튼 스타일 */
+            display: flex;
+            margin-left: auto;
+            padding: 10px 20px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+
+
+
+
     </style>
 </head>
 <body>
@@ -194,90 +257,90 @@
                   </tr>
                   </thead>
                   <tbody class="Tbody-table">
-                      <tr class="Tbody-calumn">
-                          <td>2</td>
-                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
-                          <td>2017.06.15</td>
-                          <td>2017.06.15</td>
-                      </tr>
-                      <tr class="Tbody-calumn">
-                          <td>2</td>
-                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
-                          <td>2017.06.15</td>
-                          <td>2017.06.15</td>
-                      </tr>
-                      <tr class="Tbody-calumn">
-                          <td>2</td>
-                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
-                          <td>2017.06.15</td>
-                          <td>2017.06.15</td>
-                      </tr>
-                      <tr class="Tbody-calumn">
-                          <td>2</td>
-                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
-                          <td>2017.06.15</td>
-                          <td>2017.06.15</td>
-                      </tr>
-                      <tr class="Tbody-calumn">
-                          <td>2</td>
-                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
-                          <td>2017.06.15</td>
-                          <td>2017.06.15</td>
-                      </tr>
-                      <tr class="Tbody-calumn">
-                          <td>2</td>
-                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
-                          <td>2017.06.15</td>
-                          <td>2017.06.15</td>
-                      </tr>
-                      <tr class="Tbody-calumn">
-                          <td>2</td>
-                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
-                          <td>2017.06.15</td>
-                          <td>2017.06.15</td>
-                      </tr>
-                      <tr class="Tbody-calumn">
-                          <td>2</td>
-                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
-                          <td>2017.06.15</td>
-                          <td>2017.06.15</td>
-                      </tr>
-                      <tr class="Tbody-calumn">
-                          <td>2</td>
-                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
-                          <td>2017.06.15</td>
-                          <td>2017.06.15</td>
-                      </tr>
-                      <tr class="Tbody-calumn">
-                          <td>2</td>
-                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
-                          <td>2017.06.15</td>
-                          <td>2017.06.15</td>
-                      </tr>
-                      <tr class="Tbody-calumn">
-                          <td>2</td>
-                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
-                          <td>2017.06.15</td>
-                          <td>2017.06.15</td>
-                      </tr>
-                      <tr class="Tbody-calumn">
-                          <td>2</td>
-                          <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
-                          <td>2017.06.15</td>
-                          <td>2017.06.15</td>
-                      </tr>
+
                   </tbody>
               </table>
-              <div id="data-container"></div>
-              <div id="pagination-container"></div>
+              <div class="pagination-section">
+                  <div class="pagination-container">
+                      <ul id="pagination-demo" class="pagination-sm"></ul>
+                  </div>
+                  <div class="write-button-section">
+                      <button class="btn-write">글쓰기</button>
+                  </div>
+              </div>
+
           </div>
-          <div style="text-align: right"><button class="btn-write">글쓰기</button></div>
+
       </div>
 
 
   </section>
 </body>
 <script>
+    var currentPage = 1; // 현재 페이지
+    var pageSize = 12; // 페이지 크기
+    var totalPage;
+    var visiblePage;
+
+    loadData(currentPage, pageSize); // 페이지 로드 시 데이터 불러오기
+
+
+
+
+    function loadData(page, size) {
+        $.ajax({
+            url: '/List',
+            type: 'GET',
+            data: {
+                page: page,
+                size: size
+            },
+            async: false,
+            success: function(response) {
+                totalPage = response.data.totalPages;
+                visiblePage = response.data.totalPages;
+                console.log(visiblePage);
+                var newRow;
+                $('.Tbody-table').empty();
+
+                for(var i =0; i<response.data.pageable.pageSize; i++){
+                    var sequenceNumber = i + 1 +((page-1)*totalPage);
+
+                    newRow = $('<tr class="Tbody-calumn"></tr>');
+                    newRow.append('<td>' + sequenceNumber + '</td>');
+                    newRow.append(`<th><a href="/List/${response.data.content[i].id}">` + response.data.content[i].title + '</a></th>');
+                    newRow.append('<td>' + response.data.content[i].createdAt.substring(0,10) + '</td>');
+                    newRow.append('<td>' + response.data.content[i].modifiedAt.substring(0,10) + '</td>');
+
+                    $('.Tbody-table').append(newRow); // 테이블에 새로운 행 추가
+                }
+            },
+            error: function(xhr, status, error) {
+
+            }
+        });
+    }
+
+
+
+    $('#pagination-demo').twbsPagination({
+        totalPages: totalPage,
+        visiblePages: visiblePage,
+        prev: "이전",
+        next: "다음",
+        first: '«',
+        last: '»',
+        onPageClick: function (event, page) {
+            loadData(page,pageSize)
+        }
+    });
+
+
+
+
+
+
+
 
 </script>
 </html>

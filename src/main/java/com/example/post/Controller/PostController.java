@@ -19,4 +19,11 @@ public class PostController {
     public ResponseEntity<ResponseDto> createPost(@RequestBody PostRequestDto requestDto, @AuthenticationPrincipal MemberDetails memberDetails){
         return postService.createPost(requestDto, memberDetails.getMember());
     }
+
+
+    @GetMapping("/List")
+    public ResponseEntity<ResponseDto> getPostList(@RequestParam int page,
+                                                   @RequestParam int size) {
+        return postService.getPostList(page-1, size);
+    }
 }
