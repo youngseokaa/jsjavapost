@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
@@ -236,7 +235,7 @@
                       <div class="search-wrap">
                           <label for="search" class="blind"></label>
                           <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." value="">
-                          <button type="submit" class="btn btn-dark">검색</button>
+                          <button id="searchButton" type="submit" class="btn btn-dark"  onclick="loadDataOnclickFuntion()">검색</button>
                       </div>
 
                   </form>
@@ -281,66 +280,96 @@
     var pageSize = 12; // 페이지 크기
     var totalPage;
     var visiblePage;
-
-    loadData(currentPage, pageSize); // 페이지 로드 시 데이터 불러오기
-
-
-
-
-    function loadData(page, size) {
-        $.ajax({
-            url: '/List',
-            type: 'GET',
-            data: {
-                page: page,
-                size: size
-            },
-            async: false,
-            success: function(response) {
-                totalPage = response.data.totalPages;
-                visiblePage = response.data.totalPages;
-                console.log(visiblePage);
-                var newRow;
-                $('.Tbody-table').empty();
-
-                for(var i =0; i<response.data.pageable.pageSize; i++){
-                    var sequenceNumber = i + 1 +((page-1)*totalPage);
-
-                    newRow = $('<tr class="Tbody-calumn"></tr>');
-                    newRow.append('<td>' + sequenceNumber + '</td>');
-                    newRow.append(`<th><a href="/List/${response.data.content[i].id}">` + response.data.content[i].title + '</a></th>');
-                    newRow.append('<td>' + response.data.content[i].createdAt.substring(0,10) + '</td>');
-                    newRow.append('<td>' + response.data.content[i].modifiedAt.substring(0,10) + '</td>');
-
-                    $('.Tbody-table').append(newRow); // 테이블에 새로운 행 추가
-                }
-            },
-            error: function(xhr, status, error) {
-
-            }
-        });
-    }
+    var textSearch = "";
+    var flag = true;
+    // loadData(currentPage, pageSize);
 
 
+
+    //버튼 클릭시 이벤트 호출
+    $("#searchButton").click(function(event) {
+        // 이벤트를 막아 입력값이 사라지지 않도록 함
+        event.preventDefault();
+        // 여기에 원하는 작업 수행
+    });
 
     $('#pagination-demo').twbsPagination({
         totalPages: totalPage,
         visiblePages: visiblePage,
+        startPage : 1,
+        initiateStartPageClick: true,
         prev: "이전",
         next: "다음",
         first: '«',
         last: '»',
         onPageClick: function (event, page) {
-            loadData(page,pageSize)
+            loadData(page, pageSize, $("#search").val());
         }
     });
 
+    function loadDataOnclickFuntion(){
+        loadData(currentPage, pageSize,textSearch);
+    }
+
+    loadData(currentPage, pageSize,textSearch); // 페이지 로드 시 데이터 불러오기
 
 
+    function loadData(page, size,textSearch) {
+        textSearch = $("#search").val();
+
+        if(flag) {
+            flag = false;
+            $.ajax({
+                url: '/List',
+                type: 'GET',
+                data: {
+                    page: page,
+                    size: size,
+                    textSearch: textSearch
+                },
+                async: false,
+                success: function (response) {
+
+                    totalPage = response.data.totalPages;
+                    visiblePage = response.data.totalPages;
+                    var newRow;
+
+                    if(totalPage === 0){
+                        alert("해당내용의 제목이 없습니다");
+                        window.location.reload()
+                    }
+
+                    $("#pagination-demo").twbsPagination("changeTotalPages", totalPage, page);
+                    $('.Tbody-table').empty();
 
 
+                    for (var i = 0; i < response.data.pageable.pageSize; i++) {
+                        var sequenceNumber = i + 1 + ((page - 1) * 12);
+
+                        if(response.data.content[i] === undefined){
+                            continue
+                        }
+
+                        newRow = $('<tr class="Tbody-calumn"></tr>');
+                        newRow.append('<td>' + sequenceNumber + '</td>');
+                        newRow.append(`<th><a href="/List/${response.data.content[i].id}">` + response.data.content[i].title + '</a></th>');
+                        newRow.append('<td>' + response.data.content[i].createdAt.substring(0, 10) + '</td>');
+                        newRow.append('<td>' + response.data.content[i].modifiedAt.substring(0, 10) + '</td>');
+
+                        $('.Tbody-table').append(newRow); // 테이블에 새로운 행 추가
+                    }
 
 
+                },
+                complete: function(){	// 이부분 중요
+                    flag = true;	//호출 완료되면 flag 값을 사용가능하게 변경
+                },
+                error: function (xhr, status, error) {
+
+                }
+            });
+        }
+    }
 
 </script>
 </html>

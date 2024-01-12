@@ -35,9 +35,10 @@ public class PostService {
 
 
 
-    public ResponseEntity<ResponseDto> getPostList(int page, int size) {
+    public ResponseEntity<ResponseDto> getPostList(int page, int size, String textSearch) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<PostDto> postPage = postRepository.findBySoftDeleteFalseOrderByIdAsc(pageable);
+        Page<Post> postPage = postRepository.findBySoftDeleteFalseAndTitleLikeOrderByIdAsc(textSearch,pageable);
         return ResponseDto.toResponseEntity(POST_WRITING_SUCCESS, postPage);
     }
+
 }

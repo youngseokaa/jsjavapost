@@ -23,7 +23,13 @@ public class PostController {
 
     @GetMapping("/List")
     public ResponseEntity<ResponseDto> getPostList(@RequestParam int page,
-                                                   @RequestParam int size) {
-        return postService.getPostList(page-1, size);
+                                                   @RequestParam int size, @RequestParam String textSearch) {
+        return postService.getPostList(page-1, size,textSearch);
     }
+
+//    @GetMapping("/List/Search")
+//    public ResponseEntity<ResponseDto> getPostList(@RequestParam String Search
+//                                                  ) {
+//        return postService.getPostSearchList(Search);
+//    }
 }
