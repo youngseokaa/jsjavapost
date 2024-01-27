@@ -63,13 +63,7 @@
             align-items: center;
             width: 100%;
         }
-        #submitBtn{
-            position: relative;
-            padding: 10px 20px;
-            background-color: #000;
-            color: #fff;
-            left: 365px;
-        }
+
 
     </style>
 </head>
@@ -85,46 +79,17 @@
     <div class="Post">
         <div class="textCenter">
             <div><label for="title">제목</label></div>
-            <div ><input style="width: 800px" type="text" id="title" name="title"></div>
+            <div><textarea style="width: 800px" type="text" id="title" name="title" th:text="${title}"></textarea></div>
         </div>
         <div class="textCenter">
             <div><label for="content">내용</label></div>
-            <div><textarea style="width: 800px" id="content" name="content" ></textarea></div>
+            <div><textarea style="width: 800px" id="content" name="content" th:text="${content}"></textarea></div>
         </div>
-        <div><button id="submitBtn">게시글 등록</button></div>
     </div>
 
 </section>
 </body>
 <script>
 
-    $(document).ready(function() {
-
-
-        $('#submitBtn').on('click', function() {
-            var title = $('#title').val(); // CKEditor에서 데이터 가져오기
-            var content = $('#content').val(); // 일반 input에서 값 가져오기
-
-            var formData = {
-                title: title,
-                content: content
-            };
-
-            $.ajax({
-                url: '/Post',  // 실제 서버 엔드포인트로 변경
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(formData),
-                success: function() {
-                    alert("게시글 등록이 완료되었습니다.");
-                    window.location.href = "/PostCommunityV";
-                },
-                error: function(error) {
-                    alert(error.responseJSON.message);
-                    window.location.href = "/Login";
-                }
-            });
-        });
-    });
 </script>
 </html>

@@ -355,7 +355,7 @@
 
                         newRow = $('<tr class="Tbody-calumn"></tr>');
                         newRow.append('<td>' + sequenceNumber + '</td>');
-                        newRow.append(`<th><a href="/PostCommunityR/${response.data.content[i].id}">` + response.data.content[i].title + '</a></th>');
+                        newRow.append(`<th><a href="/PostCommunityR?page=${response.data.content[i].id}">` + response.data.content[i].title + '</a></th>');
                         newRow.append('<td>' + response.data.content[i].createdAt.substring(0, 10) + '</td>');
                         newRow.append('<td>' + response.data.content[i].modifiedAt.substring(0, 10) + '</td>');
 
