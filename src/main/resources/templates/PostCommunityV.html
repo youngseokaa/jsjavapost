@@ -264,7 +264,7 @@
                       <ul id="pagination-demo" class="pagination-sm"></ul>
                   </div>
                   <div class="write-button-section">
-                      <button class="btn-write">글쓰기</button>
+                      <button class="btn-write" onclick="PageMove()">글쓰기</button>
                   </div>
               </div>
 
@@ -285,6 +285,9 @@
     // loadData(currentPage, pageSize);
 
 
+    function PageMove(){
+        window.location.href = "/PostCommunityW"
+    }
 
     //버튼 클릭시 이벤트 호출
     $("#searchButton").click(function(event) {
@@ -352,7 +355,7 @@
 
                         newRow = $('<tr class="Tbody-calumn"></tr>');
                         newRow.append('<td>' + sequenceNumber + '</td>');
-                        newRow.append(`<th><a href="/List/${response.data.content[i].id}">` + response.data.content[i].title + '</a></th>');
+                        newRow.append(`<th><a href="/PostCommunityR/${response.data.content[i].id}">` + response.data.content[i].title + '</a></th>');
                         newRow.append('<td>' + response.data.content[i].createdAt.substring(0, 10) + '</td>');
                         newRow.append('<td>' + response.data.content[i].modifiedAt.substring(0, 10) + '</td>');
 
